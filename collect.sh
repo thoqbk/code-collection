@@ -19,9 +19,9 @@ if [ ! -d "$sourceDirectory" ]; then
 	exit
 fi
 
-read -p "2. Enter the pattern of files you want to collect (ex: *Mapper.xml OR *.(java|javascript)): " pattern
+read -p "2. Enter the pattern of files you want to collect (ex: *Mapper.xml): " pattern
 
-read -p "3. Enter the destination directory (ex: $USER_DIRECTORY/code-collection): " destinationDirectory
+read -p "3. Enter the destination directory (ex: $USER_DIRECTORY/code-collection/target): " destinationDirectory
 
 if [ ! -d "$destinationDirectory" ]; then
 	echo "\""$destinationDirectory"\" is not a valid directory"
@@ -33,6 +33,7 @@ read -p "4. Enter the max deep of destination directory: " maxDestinationDirecto
 echo "Begin scan for suitable files and copy them to the destination directory"
 echo ">> Source: " $sourceDirectory
 echo ">> Pattern: " $pattern
+echo ">> Destination: " $destinationDirectory
 echo ">> Max deep of destination directory: " $maxDestinationDirectoryDeep
 
 cd $sourceDirectory
