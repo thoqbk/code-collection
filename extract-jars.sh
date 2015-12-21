@@ -1,6 +1,4 @@
 
-. ./copy.sh
-
 HOME_DIRECTORY=`pwd`
 
 cd ~
