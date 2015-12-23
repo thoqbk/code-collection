@@ -10,12 +10,13 @@ LIB_DIRECTORY="$HOME_DIRECTORY"/lib
 
 cfrFile="$LIB_DIRECTORY"/cfr_0_110.jar
 
-if [ ! type -p java; ] then
+foundJava=`type -p java`
+if [ "`type -p java`" = "" ]; then
 	echo "Command \"java\" not found. You may not install java on your machine."
 	exit
 fi
 
-if [ ! type -p jar; ] then
+if [ "`type -p jar`" = "" ]; then
 	echo "Command \"jar\" not found."
 	exit
 fi
