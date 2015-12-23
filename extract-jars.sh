@@ -10,6 +10,16 @@ LIB_DIRECTORY="$HOME_DIRECTORY"/lib
 
 cfrFile="$LIB_DIRECTORY"/cfr_0_110.jar
 
+if [ ! type -p java; ] then
+	echo "Command \"java\" not found. You may not install java on your machine."
+	exit
+fi
+
+if [ ! type -p jar; ] then
+	echo "Command \"jar\" not found."
+	exit
+fi
+
 echo "-----"
 echo "Tool for extracting all .war and .jar files"
 read -p "1. Enter the source directory (ex: $USER_DIRECTORY/.m2/repository): " sourceDirectory
@@ -32,7 +42,7 @@ echo ">> Destination: " $destinationDirectory
 
 cd $sourceDirectory
 
-jarFilesInSring=`find . -type f -name '*.jar' -o -name '*.war'`
+jarFilesInString=`find . -type f -name '*.jar' -o -name '*.war'`
 
 totalJarFiles=0
 
@@ -73,7 +83,7 @@ while IFS=' ' read -ra jarFiles; do
 
 		totalJarFiles=$((totalJarFiles+1))
 	done
-done <<< "$jarFilesInSring"
+done <<< "$jarFilesInString"
 
 endTime=`date`
 
