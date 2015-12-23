@@ -41,54 +41,49 @@ echo "Begin scan for jar files and extract them to the destination directory"
 echo ">> Source: " $sourceDirectory
 echo ">> Destination: " $destinationDirectory
 
-cd $sourceDirectory
-
-jarFilesInString=`find . -type f -name '*.jar' -o -name '*.war'`
-
 totalJarFiles=0
 
 startTime=`date`
 
-while IFS=' ' read -ra jarFiles; do
-	for jarFile in "${jarFiles[@]}"; do
+cd $sourceDirectory
 
-		#Extract this jar file
-      	jarFileWithExtension=`basename $jarFile`
-      	#Directory
-      	jarFileRegex="(.*).(jar|war)"
-      	[[ $jarFileWithExtension =~ $jarFileRegex ]]
-	    extractDirectory="${BASH_REMATCH[1]}"
-	    fileExtension="${BASH_REMATCH[2]}"
-	    targetDirectory=$destinationDirectory/$extractDirectory
+for jarFile in `find . -type f -name "*.jar" -o -name "*.war"`; do
+	#Extract this jar file
+  	jarFileWithExtension=`basename $jarFile`
+  	#Directory
+  	jarFileRegex="(.*).(jar|war)"
+  	[[ $jarFileWithExtension =~ $jarFileRegex ]]
+    extractDirectory="${BASH_REMATCH[1]}"
+    fileExtension="${BASH_REMATCH[2]}"
+    targetDirectory=$destinationDirectory/$extractDirectory
 
-	    #Extract
-	    echo "Begin extracting file: " $jarFileWithExtension " to directory " $targetDirectory
-	    if [ ! -d "$targetDirectory" ]; then
-	    	mkdir -p $targetDirectory
-		fi
+    #Extract
+    echo "Begin extracting file: " $jarFileWithExtension " to directory " $targetDirectory
+    if [ ! -d "$targetDirectory" ]; then
+    	mkdir -p $targetDirectory
+	fi
 
-        cd $sourceDirectory
-        cp $jarFile $targetDirectory
-        cd $targetDirectory
-        jar xf $jarFileWithExtension
+    cd $sourceDirectory
+    cp $jarFile $targetDirectory
+    cd $targetDirectory
+    jar xf $jarFileWithExtension
 
-        rm $jarFileWithExtension
+    rm $jarFileWithExtension
 
-        #decompile
-        if [ "$fileExtension" = "jar" ]; then
-        	#use decompile tool
-        	echo "Begin decomplining jar file: " $jarFile
-        	cd $sourceDirectory
-			java -jar $cfrFile $jarFile --outputdir $targetDirectory --comments false
-        fi
+    #decompile
+    if [ "$fileExtension" = "jar" ]; then
+    	#use decompile tool
+    	echo "Begin decomplining jar file: " $jarFile
+    	cd $sourceDirectory
+		java -jar $cfrFile $jarFile --outputdir $targetDirectory --comments false
+    fi
 
-        #remove .class files
-        cd $targetDirectory
-        find . -type f -name "*.class" -exec rm {} +
+    #remove .class files
+    cd $targetDirectory
+    find . -type f -name "*.class" -exec rm {} +
 
-		totalJarFiles=$((totalJarFiles+1))
-	done
-done <<< "$jarFilesInString"
+	totalJarFiles=$((totalJarFiles+1))
+done
 
 endTime=`date`
 

@@ -36,20 +36,16 @@ echo ">> Pattern: " $pattern
 echo ">> Destination: " $destinationDirectory
 echo ">> Max deep of destination directory: " $maxDestinationDirectoryDeep
 
-cd $sourceDirectory
-
-resultFilesInSring=`find . -type f -name "$pattern"`
-
 totalCopiedFiles=0
 
 startTime=`date`
 
-while IFS=' ' read -ra resultFiles; do
-	for resultFile in "${resultFiles[@]}"; do
-		copyResultFile $resultFile $destinationDirectory $maxDestinationDirectoryDeep
-		totalCopiedFiles=$((totalCopiedFiles+1))
-	done
-done <<< "$resultFilesInSring"
+cd $sourceDirectory
+
+for resultFile in `find . -type f -name "$pattern"`; do
+	copyResultFile $resultFile $destinationDirectory $maxDestinationDirectoryDeep
+	totalCopiedFiles=$((totalCopiedFiles+1))
+done
 
 endTime=`date`
 
