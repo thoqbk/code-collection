@@ -12,12 +12,12 @@ cfrFile="$LIB_DIRECTORY"/cfr_0_110.jar
 
 foundJava=`type -p java`
 if [ "`type -p java`" = "" ]; then
-	echo "Command \"java\" not found. You may not install java on your machine."
+	echo "Command \"java\" not found. You may not install JDK on your machine."
 	exit
 fi
 
 if [ "`type -p jar`" = "" ]; then
-	echo "Command \"jar\" not found."
+	echo "Command \"jar\" not found. You may not install JDK on your machine."
 	exit
 fi
 
@@ -81,6 +81,10 @@ while IFS=' ' read -ra jarFiles; do
         	cd $sourceDirectory
 			java -jar $cfrFile $jarFile --outputdir $targetDirectory --comments false
         fi
+
+        #remove .class files
+        cd $targetDirectory
+        find . -type f -name "*.class" -exec rm {} +
 
 		totalJarFiles=$((totalJarFiles+1))
 	done
