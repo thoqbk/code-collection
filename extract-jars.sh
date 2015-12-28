@@ -21,20 +21,24 @@ if [ "`type -p jar`" = "" ]; then
 	exit
 fi
 
-echo "-----"
-echo "Tool for extracting all .war and .jar files"
-read -p "1. Enter the source directory (ex: $USER_DIRECTORY/.m2/repository): " sourceDirectory
+if [ "$MODE" != "test" ]; then
 
-if [ ! -d "$sourceDirectory" ]; then
-	echo "\""$sourceDirectory"\" is not a valid directory"
-	exit
-fi
+    echo "-----"
+    echo "Tool for extracting all .war and .jar files"
+    read -p "1. Enter the full path of source directory (ex: $USER_DIRECTORY/.m2/repository): " sourceDirectory
 
-read -p "2. Enter the destination directory (ex: $USER_DIRECTORY/code-collection/target): " destinationDirectory
+    if [ ! -d "$sourceDirectory" ]; then
+    	echo "\""$sourceDirectory"\" is not a valid directory"
+    	exit
+    fi
 
-if [ ! -d "$destinationDirectory" ]; then
-	echo "\""$destinationDirectory"\" is not a valid directory"
-	exit
+    read -p "2. Enter the full path of destination directory (ex: $USER_DIRECTORY/code-collection/target): " destinationDirectory
+
+    if [ ! -d "$destinationDirectory" ]; then
+    	echo "\""$destinationDirectory"\" is not a valid directory"
+    	exit
+    fi
+
 fi
 
 echo "Begin scan for jar files and extract them to the destination directory"
