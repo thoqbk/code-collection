@@ -38,3 +38,9 @@ Email: thoqbk@gmail.com
 ## License
 The MIT License (MIT)
 
+=======
+Note that: 
+
+1. If set `max deep of destination directory` to `-1`, the structure of destination directory (`all-html-files`) will be keep the same with the `all-com-library-source-code` directory.
+
+2. If set `max deep of destination` directory to `0`, all found files will be store in `all-html-files` directory. If a file name has already existed, it will be suffix by a number (ex: `package-1.html`)
