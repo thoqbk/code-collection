@@ -49,7 +49,7 @@ totalJarFiles=0
 
 startTime=`date`
 
-cd $sourceDirectory
+cd "$sourceDirectory"
 
 for jarFile in `find . -type f -name "*.jar" -o -name "*.war"`; do
 	#Extract this jar file
@@ -67,7 +67,7 @@ for jarFile in `find . -type f -name "*.jar" -o -name "*.war"`; do
     	mkdir -p $targetDirectory
 	fi
 
-    cd $sourceDirectory
+    cd "$sourceDirectory"
     cp $jarFile $targetDirectory
     cd $targetDirectory
     jar xf $jarFileWithExtension
@@ -78,7 +78,7 @@ for jarFile in `find . -type f -name "*.jar" -o -name "*.war"`; do
     if [ "$fileExtension" = "jar" ]; then
     	#use decompile tool
     	echo "Begin decomplining jar file: " $jarFile
-    	cd $sourceDirectory
+    	cd "$sourceDirectory"
 		java -jar $cfrFile $jarFile --outputdir $targetDirectory --comments false
     fi
 
